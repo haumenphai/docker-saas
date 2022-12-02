@@ -12,7 +12,7 @@ How to use:
     docker network create --subnet=172.1.1.1/24 dockernet1234
     ```
 - Ensure no local dns server when create a container:
-    edit file `/etc/resolv.conf`, move `nameserver 8.8.8.8` to the top.
+    edit file `/etc/resolv.conf`, add `nameserver 8.8.8.8` to the top.
     ```
     sudo nano /etc/resolv.conf
     ```
