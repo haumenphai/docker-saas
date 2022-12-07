@@ -1,0 +1,69 @@
+services:
+  nginx_server:
+    hostname: nginx-server
+    container_name: nginx_compose
+    privileged: true
+    image: haumenphai/nginx-page-speed-1.22.0:20.04
+    command: /usr/sbin/init
+    networks:
+      docker_saas_net:
+        ipv4_address: 10.5.0.2
+
+  psql_server:
+    hostname: psql-server
+    container_name: psql_compose
+    privileged: true
+    image: haumenphai/psql:20.04
+    command: /usr/sbin/init
+    networks:
+      docker_saas_net:
+        ipv4_address: 10.5.0.3
+
+  odoo_server:
+    hostname: odoo-server
+    container_name: odoo_server
+    privileged: true
+    image: haumenphai/odoo_server:20.04
+    command: /usr/sbin/init
+    networks:
+      docker_saas_net:
+        ipv4_address: 10.5.0.4
+
+  dns_server:
+    hostname: dns-server
+    container_name: dns_server
+    privileged: true
+    image: haumenphai/dns:20.04
+    command: /usr/sbin/init
+    networks:
+      docker_saas_net:
+        ipv4_address: 10.5.0.5
+
+  sv3_mix:
+    hostname: sv3-mix
+    container_name: sv3_mix
+    privileged: true
+    image: haumenphai/sv3_mix:20.04
+    command: /usr/sbin/init
+    networks:
+      docker_saas_net:
+        ipv4_address: 10.5.0.6
+
+  mail_server:
+    hostname: mail-server
+    container_name: mail_server
+    privileged: true
+    image: haumenphai/mail_server:20.04
+    command: /usr/sbin/init
+    networks:
+      docker_saas_net:
+       ipv4_address: 10.5.0.7
+
+networks:
+  docker_saas_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
