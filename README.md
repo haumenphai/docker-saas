@@ -7,6 +7,10 @@ How to use:
 ----------
 *Prepare*:
 - Install docker Engine: https://docs.docker.com/engine/install/
+- Install docker Compose: https://docs.docker.com/compose/install/linux/#install-using-the-repository
+
+**Option 1, run separate containers:**
+
 - You **must** create a docker network for assign static IP to container
   + ```
     docker network create --subnet=172.1.1.1/24 dockernet1234
@@ -66,3 +70,66 @@ $ docker run -itd --privileged --net dockernet1234 --ip 172.1.1.7 --name mail_se
 ```
 $ docker run -itd --privileged --net dockernet1234 --ip 172.1.1.8 --name sv3 -h sv3.foo.baz haumenphai/sv3_mix:20.04 /usr/sbin/init && docker exec -it sv3 bash
 ```
+<br><br> <br><br><br><br>
+
+**Option 2, run all containers, use docker compose:**
+
+- ```cd docker-saas```
+
+Create and start all saas-server containers:
+- ```docker compose up -d```
+
+Config ssh, edit file `~/.ssh/config` (```nano ~/.ssh/config```) and add the following content:
+```
+Host nginx_server
+   HostName 10.5.0.2
+   User root
+   Port 22
+
+Host psql_server
+   HostName 10.5.0.3
+   User root
+   Port 22
+
+Host odoo_server
+   HostName 10.5.0.4
+   User root
+   Port 22
+
+Host dns_server:
+   HostName 10.5.0.5
+   User root
+   Port 22
+ 
+Host sv3_mix:
+   HostName 10.5.0.6
+   User root
+   Port 22
+
+Host mail_server:
+   HostName 10.5.0.7
+   User root
+   Port 22
+```
+To go inside the mail_server container:
+
+```ssh mail_server``` (pass=1) <br>
+or <br>
+```docker exec -it mail_server bash``` <br>
+
+
+======================== <br>
+Ensure current working dir is: docker-saas, or add option -f (path of `docker-compose.yaml`),
+eg: <br>
+`docker compose -f /opt/docker-compose.yaml stop`
+
+To stop all saas-server containers: <br>
+```docker compose stop``` <br>
+To start all saas-server containers: <br>
+```docker compose start``` <br>
+To remove all saas-server containers: <br> 
+```docker compose rm``` <br>
+To stop and remove all saas-server container: <br>
+```docker compose down``` <br>
+To list all saas-server containers: <br>
+```docker compose ps```
