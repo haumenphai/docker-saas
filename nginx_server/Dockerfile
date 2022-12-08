@@ -50,6 +50,12 @@ KillMode=mixed\n\
 WantedBy=multi-user.target\n" >> /lib/systemd/system/nginx.service
 
 
+RUN apt-get install -y git
+WORKDIR /
+RUN git clone https://github.com/wolfcw/libfaketime.git
+WORKDIR /libfaketime/src
+RUN make install
+
 WORKDIR /~
 COPY ./setup.sh /~
 COPY ./nginx.conf /etc/nginx/nginx.conf
