@@ -23,7 +23,7 @@ RUN chmod +x /~/setup.sh
 #========================================================================
 # how to use:
 # $ cd ubuntu_full_20_04
-# $ docker build -t haumenphai/ubuntu-full-dotd:20.04 .
+# $ docker build -t haumenphai/ubuntu-full-dotd:20.04 . --network dockernet1234
 # $ docker run -itd --privileged --name test1 -h test1.foo.baz haumenphai/ubuntu-full-dotd:20.04 /usr/sbin/init && docker exec -it test1 bash
 # root@test1:~# /bin/bash setup.sh
 
